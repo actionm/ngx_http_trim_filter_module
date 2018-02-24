@@ -136,7 +136,7 @@ result:
   IE comment: `<!--[if  <![endif]-->`  
   SSI comment: `<!--#  -->`  
   ESI comment: `<!--esi  -->`  
-
+  Comment starting with `<!--/` or `<!--n`, example: `<!--noindex-->` `<!--/noindex-->`
 
 ### Javascript
 Contents enclosed by `<script type="text/javascript">` or `<script>` will be identified as javascript.

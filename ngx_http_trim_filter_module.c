@@ -730,27 +730,35 @@ ngx_http_trim_parse(ngx_http_request_t *r, ngx_chain_t *in,
 
         case trim_state_comment_hack_begin:
             switch (ch) {
-            case '#':
-                ctx->state = trim_state_comment_hack_end;
-                ctx->looked = 0;
-                break;
-            case 'e':
-                ctx->state = trim_state_comment_hack_end;
-                ctx->looked = 0;
-                break;
-            case '[':
-                ctx->state = trim_state_comment_ie_begin;
-                ctx->looked = 1;
-                ctx->saved_comment++;
-                continue;
-            case '-':
-                ctx->state = trim_state_comment_end;
-                ctx->looked = 1;
-                continue;
-            default:
-                ctx->state = trim_state_comment_end;
-                ctx->looked = 0;
-                continue;
+                case 'n':
+                    ctx->state = trim_state_comment_hack_end;
+                    ctx->looked = 0;
+                    break;
+                case '/':
+                    ctx->state = trim_state_comment_hack_end;
+                    ctx->looked = 0;
+                    break;
+                case '#':
+                    ctx->state = trim_state_comment_hack_end;
+                    ctx->looked = 0;
+                    break;
+                case 'e':
+                    ctx->state = trim_state_comment_hack_end;
+                    ctx->looked = 0;
+                    break;
+                case '[':
+                    ctx->state = trim_state_comment_ie_begin;
+                    ctx->looked = 1;
+                    ctx->saved_comment++;
+                    continue;
+                case '-':
+                    ctx->state = trim_state_comment_end;
+                    ctx->looked = 1;
+                    continue;
+                default:
+                    ctx->state = trim_state_comment_end;
+                    ctx->looked = 0;
+                    continue;
             }
 
             if ((size_t) (read - buf->pos) >= ctx->saved_comment) {

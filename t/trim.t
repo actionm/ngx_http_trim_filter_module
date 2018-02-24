@@ -815,3 +815,35 @@ body
 }
 </style>
 
+=== TEST 28: do not trim html comment wich starts with / or n
+--- config
+    trim on;
+    trim_js on;
+    trim_css on;
+    location /t/ { proxy_buffering off; proxy_pass http://127.0.0.1:$TEST_NGINX_TRIM_PORT/;}
+    location /trim.html { trim off;}
+--- user_files
+>>> trim.html
+<!DOCTYPE html>
+<!--noindex-->
+<!--/noindex-->
+<!--# w  -->
+<!-- hello -->
+<!--# ssi  -->
+<!--esi    -->
+<!-- world -->
+<!---->
+<!--e    -->
+<!-------->
+<!--[if  ie  <![endif]-->
+--- request
+    GET /t/trim.html
+--- response_body
+<!DOCTYPE html>
+<!--noindex-->
+<!--/noindex-->
+<!--# w  -->
+<!--# ssi  -->
+<!--esi    -->
+<!--e    -->
+<!--[if  ie  <![endif]-->
